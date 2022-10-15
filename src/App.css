@@ -1,5 +1,13 @@
+@import '~antd/dist/antd.css';
+
+@import '~antd/dist/antd.css';
+
+::-webkit-scrollbar {width:5px;height:5px;position:absolute;}
+::-webkit-scrollbar-thumb {background-color:#1890ff}
+::-webkit-scrollbar-track {background-color:#ddd}
+
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
@@ -35,4 +43,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 自定义部分 */
+.App {
+  height: 100%;
 }
