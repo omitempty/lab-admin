@@ -8,19 +8,14 @@ import {
 import axios from "axios";
 const { confirm } = Modal;
 
-// 表头其实是样式的一部分，需要自己先定义好
-// 其实也可以让后端返回对应的数据，然后自己渲染成相应的表头
-
 export default function Rights() {
   console.log("render");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  // 不想用filter，用这个偷个懒，但是这个效率比较低，而且loading有逻辑问题
   const [refresh, setRefresh] = useState(false);
   const [render, setRender] = useState(false);
   const handleSwitch = (item) => {
     console.log(item);
-    // 注意这么写并不会触发渲染,页面是不会有变化的
     item.pagepermisson = 1 - item.pagepermisson;
     const url = `http://localhost:5000/${
       item.grade === 1 ? "rights" : "children"
@@ -29,7 +24,6 @@ export default function Rights() {
       .patch(url, { pagepermisson: item.pagepermisson })
       .then(() => {
         setRender(!render);
-        // setRefresh(!refresh);
       })
       .catch((error) => {
         console.log(error);
@@ -105,7 +99,6 @@ export default function Rights() {
               <Button
                 type="primary"
                 shape="circle"
-                // 这里必须用闭包来把对象拿到,event没什么用
                 icon={<EditOutlined />}
                 disabled={item.pagepermisson === undefined}
               />

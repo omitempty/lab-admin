@@ -78,20 +78,6 @@ export default function Roles() {
   const handleOk = () => {
     setIsModalVisibal(false);
     const url = `http://localhost:5000/roles/${currentRole.id}`;
-    // 前端更新方法，整个数组更新开销还是不小的？是否可以偷偷更新然后用refresh触发渲染？
-    // 前端事实上不太在意内存的拷贝开销，不要盲目套用后端的性能思路
-    // setRoles(
-    //   roles.map((role) => {
-    //     return role.id !== currentRole.id ? role : currentRole;
-    //   })
-    // );
-
-    // 实验偷偷更新触发重绘，但是感觉应该不行，因为state的引用没变的话react估计根本不会重绘那部分
-    // 果然，因为引用没变化，更深的内容直接不比较了，这个跟diff算法有关
-    // roles[currentRole.id - 1] = currentRole;
-    // setRefresh(!refresh);
-
-    // 偷懒方法，更改后端数据后直接重新重新获取数据
     axios.patch(url, { rights: currentRole.rights }).catch((error) => {
       console.log(error);
     });
@@ -118,7 +104,6 @@ export default function Roles() {
       });
 
     axios
-      // localhost写成locahost了，还是蛮经常写错的
       .get(`http://localhost:5000/rights?_embed=children`)
       .then((res) => {
         console.log(res.data);
@@ -139,7 +124,7 @@ export default function Roles() {
         scroll={{ y: "650px" }}
         loading={loading}
       />
-    <Modal
+      <Modal
         title="编辑角色权限"
         open={isModalVisibal}
         onOk={handleOk}

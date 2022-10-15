@@ -107,7 +107,6 @@ export default function NewsCategory() {
       });
   }, [refresh]);
 
-  // 示例给的是map写法，我这里只有一项所以直接写了，多项的话还是map方便
   const columns = [
     {
       title: "ID",
@@ -141,15 +140,11 @@ export default function NewsCategory() {
     },
   ];
 
-  // 示例给的是改前端数据，我本来想直接发个axios重新渲染完事
-  // 但是这样写没学到什么，照着人家的写一遍吧，还有最佳实践可以看
-  // 和map一对比就知道底层和封装得好的api的开发效率的区别了
-  // 这里不处理后端异步关系，不知道真实开发中是怎么做的
   const handleSave = (row) => {
     const data = [...categories];
     const index = data.findIndex((item) => row.id === item.id);
     const item = data[index];
-    // 解构似乎会把前面的字段覆盖掉，这种写法能做一般性的更新
+
     console.log(item, row);
     data.splice(index, 1, { ...item, ...row });
     setCategories(data);
@@ -201,7 +196,7 @@ export default function NewsCategory() {
       })
       .then(() => {
         setOpen(false);
-        // 强行刷新一遍
+
         setRefresh(!refresh);
       })
       .catch((error) => console.log(error));

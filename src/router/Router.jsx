@@ -45,7 +45,6 @@ export default function Router() {
   const [routes, setRoutes] = useState([]);
 
   useEffect(() => {
-    // promise.All用法
     Promise.all([axios.get("/rights"), axios.get("/children")])
       .then((res) => {
         const data = [...res[0].data, ...res[1].data];

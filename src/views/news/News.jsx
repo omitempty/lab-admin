@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import _ from "lodash";
 import axios from "axios";
 
-// 感觉这块业务逻辑还挺复杂
-
 export default function News() {
   const [newsList, setNewsList] = useState([]);
 
@@ -15,12 +13,9 @@ export default function News() {
       .get(url)
       .then((res) => {
         const group = _.groupBy(res.data, (item) => item.category.title);
-        // 用object.entries可以把对象每个键值对映射成[name, value]的数组形式
-        // 用下标也挺麻烦的，我这里就不改了
-        // console.log(Object.entries(group));
+
         let list = [];
         for (let i in group) {
-          // 不显示没有文章的分类
           if (group[i].length > 0) {
             list.push({
               name: i,
@@ -33,7 +28,6 @@ export default function News() {
       .catch((error) => console.log(error));
   }, []);
 
-  // 一个复杂的大map
   return (
     <div
       style={{

@@ -204,12 +204,6 @@
         "/audit-manage",
         "/audit-manage/audit",
         "/audit-manage/list",
-        "/right-manage/right/delete",
-        "/right-manage/role/update",
-        "/right-manage/right/update",
-        "/right-manage/role/delete",
-        "/right-manage",
-        "/right-manage/role/list",
         "/news-manage/update/:id",
         "/news-manage/preview/:id",
         "/news-manage/draft",
@@ -227,13 +221,11 @@
         "/audit-manage/list",
         "/publish-manage",
         "/publish-manage/unpublished",
-        "/audit-manage/audit",
         "/news-manage/list",
         "/news-manage/add",
         "/news-manage/update/:id",
         "/news-manage/preview/:id",
         "/news-manage/draft",
-        "/news-manage/category",
         "/information/:id",
         "/news-manage"
       ]
@@ -412,7 +404,7 @@
   "rights": [
     {
       "id": 1,
-      "title": "首页",
+      "title": "通讯录",
       "key": "/home",
       "pagepermisson": 1,
       "grade": 1
@@ -824,6 +816,19 @@
       "star": 0,
       "view": 0,
       "id": 25
+    },
+    {
+      "title": "我是学生",
+      "categoryId": 1,
+      "content": "<p>xxxxxx</p>\n",
+      "region": "南美洲",
+      "author": "starbug",
+      "roleId": 3,
+      "auditState": 1,
+      "publishState": 0,
+      "star": 0,
+      "view": 0,
+      "id": 26
     }
   ]
 }

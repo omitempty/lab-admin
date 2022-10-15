@@ -71,8 +71,6 @@ export default function AuditList() {
     },
   ];
 
-  // 撤销我的理解是返回草稿状态，patch一下就可以
-  // 当然要引起页面强制更新
   const onCancel = (item) => {
     const url = `/news/${item.id}`;
     axios
@@ -83,7 +81,6 @@ export default function AuditList() {
       .catch((error) => console.log(error));
   };
 
-  // 这里修改成delete
   const onDelete = (item) => {
     const url = `/news/${item.id}`;
     axios
@@ -92,10 +89,6 @@ export default function AuditList() {
       .catch((error) => console.log(error));
   };
 
-  // modify应该是要调回编辑页面
-  // 编辑完之后只能有草稿箱和再次提交审核两种状态
-  // 如果编辑完不保存那就还是未通过状态
-  // 发现我对业务已经有点熟悉了
   const onModify = (item) => {
     const url = `/news-manage/update/${item.id}`;
     navigate(url);

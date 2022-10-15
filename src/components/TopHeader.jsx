@@ -40,7 +40,7 @@ function TopHeader(props) {
         padding: "0 14px",
       }}
     >
-      {/* 用这个写法是避免重复传参 */}
+      {}
       {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: "trigger",
         onClick: () => dispatch(reverse()),

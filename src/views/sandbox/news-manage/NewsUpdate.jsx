@@ -60,15 +60,12 @@ export default function NewsUpdate() {
           categoryId,
         });
         setNews(res.data);
-        // 还是有用的，patch的时候都会覆盖原来的
+
         setContent(content);
-        // 这里的状态转换是难点
-        // 文档确实不好找，kerwin应该也是找了很久，直接抄代码当然容易，但是我们要锻炼的是查找文档的能力
-        // 注意这里setEditorState不能依赖于setContent
+
         console.log(content);
         const contentBlock = htmlToDraft(content);
         if (contentBlock) {
-          // create写成creat，还真不好看出来hhh
           const contentState = ContentState.createFromBlockArray(
             contentBlock.contentBlocks
           );
@@ -86,7 +83,6 @@ export default function NewsUpdate() {
   };
 
   const next = () => {
-    // 步骤一下一步需要先校验表单
     if (current === 0) {
       formRef.current
         .validateFields()
@@ -108,7 +104,7 @@ export default function NewsUpdate() {
 
   const handleUpdate = (auditState) => {
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    // 很多字段不应该在这里被更新，原则是只更新这里能修改的部分
+
     axios
       .patch(`/news/${news.id}`, {
         ...form,
@@ -127,8 +123,7 @@ export default function NewsUpdate() {
           default:
             console.log("unexpected auditState", auditState);
         }
-        // navigate居然不影响后续代码执行
-        // navigate只是改变数据来改变页面状态而已，对于程序执行流并没有什么影响
+
         notification.info({
           message: "通知",
           description: `您可以到${
@@ -143,11 +138,7 @@ export default function NewsUpdate() {
 
   return (
     <>
-      <PageHeader
-        className="site-page-header"
-        title="撰写报告"
-        // subTitle="This is a subtitle"
-      />
+      <PageHeader className="site-page-header" title="撰写报告" />
       <Steps current={current}>
         <Step title="基本信息" description="报告标题，报告分类" />
         <Step title="报告内容" description="报告主体内容" />

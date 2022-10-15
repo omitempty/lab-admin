@@ -23,7 +23,6 @@ export default function Users() {
   const addFormRef = useRef(null);
   const updateFormRef = useRef(null);
 
-  // 临时解决方案
   const user = JSON.parse(localStorage.getItem("token"));
 
   const confirmDelete = (item) => {
@@ -75,20 +74,6 @@ export default function Users() {
       title: "ID",
       dataIndex: "id",
       render: (id) => <b>{id}</b>,
-      onFilter: (value, record) => {
-        console.log(value);
-        return value === record.region;
-      },
-      filters: [
-        ...regions.map((region) => ({
-          text: region.title,
-          value: region.value,
-        })),
-        {
-          text: "全球",
-          value: "全球",
-        },
-      ],
     },
     {
       title: "角色名称",
@@ -145,13 +130,11 @@ export default function Users() {
     },
   ];
 
-  // form适合做非受控组件，我们用ref拿值，由于嵌套了一层组件，所以需要forwardRef
   const handleAddUser = () => {
     addFormRef.current
       .validateFields()
       .then((form) => {
         setOpenAddForm(false);
-        // setDisableRegion(false);
         addFormRef.current.resetFields();
         return axios.post("http://localhost:5000/users", {
           ...form,
@@ -160,26 +143,22 @@ export default function Users() {
         });
       })
       .then((res) => {
-        // 直接强行重新渲染users
         setRefresh(!refresh);
       })
       .catch((error) => console.log(error));
   };
 
-  // 只能拿到event没什么用
   const handleUpdateUser = () => {
     updateFormRef.current
       .validateFields()
       .then((form) => {
         setOpenUpdateForm(false);
         console.log(form);
-        // 因为form里没有currentUser的id, 所以我们需要一个currentUser来获得id
         return axios.patch(`http://localhost:5000/users/${currentUser.id}`, {
           ...form,
         });
       })
       .then((res) => {
-        // 直接强行重新渲染users
         setRefresh(!refresh);
       })
       .catch((error) => console.log(error));
@@ -192,12 +171,7 @@ export default function Users() {
         if (user.roleId === 1) {
           setUsers(res.data);
         } else if (user.roleId === 2) {
-          setUsers([
-            ...res.data.filter(
-              (item) => item.roleId > user.roleId && item.region === user.region
-            ),
-            user,
-          ]);
+          setUsers([...res.data.filter((item) => item.roleId > user.roleId)]);
         } else {
           console.log("unexpected case", user);
         }
@@ -234,7 +208,6 @@ export default function Users() {
         scroll={{ y: "650px" }}
         loading={loading}
       />
-      {/* 把Modal再封装进去也没什么好处的感觉，反正状态都得传，函数也要写 */}
       <Modal
         open={openAddForm}
         title="新增用户"
@@ -248,7 +221,6 @@ export default function Users() {
           {...{ roles, regions, disableRegion, setDisableRegion }}
         ></UserForm>
       </Modal>
-      {/* 渲染两套组件的方案业务逻辑分得比较开，多渲染一个form也不是多大开销 */}
       <Modal
         open={openUpdateForm}
         title="修改用户"
@@ -256,7 +228,6 @@ export default function Users() {
         cancelText="取消"
         onCancel={() => {
           setOpenUpdateForm(false);
-          // setDisableRegion(false);
         }}
         onOk={handleUpdateUser}
       >

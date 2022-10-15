@@ -28,11 +28,9 @@ export default function Detail() {
       .catch((error) => console.log(error));
   }, [params.id]);
 
-  // 随时思考数据从哪里来，这个页面自带了id
   const handleStar = () => {
     const url = `/news/${news.id}`;
     if (!stared) {
-      // 点赞
       axios
         .patch(url, {
           star: news.star + 1,
@@ -43,7 +41,6 @@ export default function Detail() {
         })
         .catch((error) => console.log(error));
     } else {
-      // 取消点赞
       axios
         .patch(url, {
           star: news.star - 1,

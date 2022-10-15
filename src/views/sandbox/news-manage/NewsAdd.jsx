@@ -19,16 +19,12 @@ import { useNavigate } from "react-router-dom";
 const { Step } = Steps;
 const { Option } = Select;
 
-// 我的写法居然跟antd一致诶，看来学习能力还是不错的
-// 为什么人家的事件函数喜欢用闭包包一层呢，我记得好像有什么不重要的区别，是不是只是一种编码习惯
-
 export default function NewsAdd() {
   const [current, setCurrent] = useState(0);
   const [categories, setCategories] = useState([]);
   const [editorState, setEditorState] = useState(null);
   const [form, setForm] = useState(null);
-  // 不用这个content状态的话，每次从editorState取会有null的问题
-  // 这个content相当于一个中间状态，解决了null的问题
+
   const [content, setContent] = useState("");
   const navigate = useNavigate();
   const formRef = useRef(null);
@@ -40,7 +36,6 @@ export default function NewsAdd() {
   };
 
   useEffect(() => {
-    // 之前漏掉了get，但是没有问题，说明axios的默认方法是get
     axios
       .get("/categories")
       .then((res) => {
@@ -57,7 +52,6 @@ export default function NewsAdd() {
   };
 
   const next = () => {
-    // 步骤一下一步需要先校验表单
     if (current === 0) {
       formRef.current
         .validateFields()
@@ -106,8 +100,7 @@ export default function NewsAdd() {
           default:
             console.log("unexpected auditState", auditState);
         }
-        // navigate居然不影响后续代码执行
-        // navigate只是改变数据来改变页面状态而已，对于程序执行流并没有什么影响
+
         notification.info({
           message: "提示",
           description: `您可以到${
@@ -122,11 +115,7 @@ export default function NewsAdd() {
 
   return (
     <>
-      <PageHeader
-        className="site-page-header"
-        title="撰写报告"
-        // subTitle="This is a subtitle"
-      />
+      <PageHeader className="site-page-header" title="撰写报告" />
       <Steps current={current}>
         <Step title="基本信息" description="报告标题，报告分类" />
         <Step title="报告内容" description="报告主体内容" />
@@ -158,7 +147,7 @@ export default function NewsAdd() {
             rules={[{ required: true, message: "请输入报告分类" }]}
           >
             <Select>
-              {/* 注意这里Option的用法，展示内容可以用children来设置 */}
+              {}
               {categories.map((item) => (
                 <Option value={item.id} key={item.id}>
                   {item.title}
