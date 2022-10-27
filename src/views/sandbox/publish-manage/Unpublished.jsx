@@ -12,7 +12,7 @@ export default function Unpublished() {
   }, [refresh]);
 
   const handleUpdate = (values) => {
-    const url = `/users/${user.id}_sort=roleId`;
+    const url = `/users/${user.id}`;
     axios
       .patch(url, { ...values })
       .then((res) => {
